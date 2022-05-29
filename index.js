@@ -1,44 +1,57 @@
-
 class Dictionary{
-
+    #name;
+    #words;
     constructor(name) {
-        this.name = name;
-        this.words = {};
+
+        this.#name = name;
+        this.#words = {};
     }
+    get mainName(){
+        return this.#name;
+    }
+    // set setMainName (#name){
+    //     return this.#name;
+    // }
+    get allWords(){
+        return this.#words;
+    }
+    // addNewWord(wordKey, worObj){
+    //     this.#words.;
+    // }
     add(word, description) {
-        if (!this.words.hasOwnProperty(word)) {
-            this.words[word] = {word, description};
+        if (!this.mainName.hasOwnProperty(word)) {
+            this.allWords[word] = {word, description};
         }
     }
     remove (word){
-      delete this.words[word];
+        delete this.allWords[word];
     };
 
-    get(key){
-    return this.
-        words[key].word + this.words[key].description;
+    get(word){
+        return this.allWords[word];
     };
 
     showAllWords(){
-        for (let key in this.words){
-            console.log(`${key} - ${this.words[key].description}`)
+        for (let key in this.allWords){
+            console.log(`${key} - ${this.allWords[key].description}`)
         }
 
     };
 
 
 }
+
 const dictionary = new Dictionary("Толковый словарь");
 dictionary.add("JavaScript", "популярный язык программирования");
 dictionary.add(
     "Веб-разработчик",
     "Человек, который создает новые сервисы и сайты или поддерживает и дополняет существующие"
 );
-console.log(dictionary.get('Веб-разработчик'));
 
 
- dictionary.remove("JavaScript");
- dictionary.showAllWords();
+
+ //dictionary.remove("JavaScript");
+console.log(dictionary.showAllWords());
 
 
 
@@ -49,8 +62,8 @@ class HardWordsDictionary extends Dictionary {
     }
     add (word, description)
     {
-        if (!this.words.hasOwnProperty(word)) {
-            this.words[word] = {word, description, isDifficult:true};
+        if (!this.allWords.hasOwnProperty(word)) {
+            this.allWords[word] = {word, description, isDifficult:true};
         }
     }
 }
@@ -73,6 +86,7 @@ hardWordsDictionary.add(
 
 hardWordsDictionary.remove("неологизм");
 
-hardWordsDictionary.showAllWords();
+console.log(hardWordsDictionary.showAllWords());
+
 
 
