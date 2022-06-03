@@ -62,22 +62,23 @@ for (let task of tasks)
 
 
 // submit
-let maxIdNumber = tasks.length;
-console.log(maxIdNumber)
+//
+
 
 const createTaskBlock = document.querySelector('.create-task-block');
 createTaskBlock.addEventListener('submit', (event)=>{
     event.preventDefault();
-
+    let uniqId = Date.now();
     let input = document.querySelector('.create-task-block__input');
-    ++maxIdNumber;
-    console.log(maxIdNumber)
     let task = {
-        id: maxIdNumber,
+        id: uniqId,
         text: input.value
     }
+    console.log(task)
+
     tasks.push(task);
     input.value = '';
     createTask(taskList,task)
-    console.log()
+
 });
+
