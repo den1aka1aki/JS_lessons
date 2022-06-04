@@ -73,7 +73,17 @@ createTaskBlock.addEventListener('submit', (event)=> {
         id: uniqId,
         text: input.value
     }
+    function createSpanErr () {
 
+        const errBlock = document.querySelector('.create-task-block');
+        const span = document.createElement('span');
+        span.className = 'error-message-block';
+        errBlock.append(span);
+        span.textContent = 'buuuu'
+
+
+
+    }
 
     function isEmpty (){
         if (input.value.toString().trim() === ''){
@@ -90,10 +100,12 @@ createTaskBlock.addEventListener('submit', (event)=> {
     }
 
     if(isEmpty(input)){
-        console.log('pusto')
+        createSpanErr()
+
     }
     else if(findTask()){
-        console.log('nashli')
+        createSpanErr()
+
     }
     else{
 
