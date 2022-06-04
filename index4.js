@@ -90,43 +90,25 @@ createTaskBlock.addEventListener('submit', (event)=> {
         }
     }
 
-    function isEmpty (){
-        if (input.value.toString().trim() === ''){
-            return true;
+    function inputValidation (){
+        let validationFlag;
+        checkIfExistSpanErr();
+        if (input.value.toString().trim() === '')
+        {
+            createSpanErr('Название задачи не должно быть пустым');
+            validationFlag = true;
         }
-
+        if( tasks.find(task => task.text === input.value )) {
+            createSpanErr('Задача с таким названием уже существует');
+            validationFlag = true;
+        }
+       return validationFlag;
     }
-
-    function findTask (){
-
-      if(tasks.find(task => task.text === input.value)){
-        return true;
-      }
-
-    }
-
-    if(isEmpty(input)){
-
-        checkIfExistSpanErr()
-
-        createSpanErr('Название задачи не должно быть пустым');
-
-    }
-    else if(findTask()){
-
-        checkIfExistSpanErr()
-
-        createSpanErr('Задача с таким названием уже существует');
-
-    }
-    else{
-
-        checkIfExistSpanErr()
-
+        if (!inputValidation()){
         tasks.push(task);
         input.value = '';
         createTask(taskList, task)
-    }
+        }
 
 
 });
