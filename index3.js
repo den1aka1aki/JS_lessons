@@ -59,17 +59,20 @@ function createTask(parent,task){
 let taskList = document.querySelector(".tasks-list");
 for (let task of tasks)
     createTask(taskList, task);
-
+let input = document.querySelector('.create-task-block__input');
 
 // submit
 //
 
 
+
 const createTaskBlock = document.querySelector('.create-task-block');
 createTaskBlock.addEventListener('submit', (event)=>{
     event.preventDefault();
+
+
     let uniqId = Date.now();
-    let input = document.querySelector('.create-task-block__input');
+
     let task = {
         id: uniqId,
         text: input.value
@@ -81,4 +84,6 @@ createTaskBlock.addEventListener('submit', (event)=>{
     createTask(taskList,task)
 
 });
+
+
 
