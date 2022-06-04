@@ -84,10 +84,17 @@ createTaskBlock.addEventListener('submit', (event)=> {
 
     }
 
+    function checkIfExistSpanErr(){
+        if(document.querySelector('.error-message-block')){
+            document.querySelector('.create-task-block').lastChild.remove();
+        }
+    }
+
     function isEmpty (){
         if (input.value.toString().trim() === ''){
             return true;
         }
+
     }
 
     function findTask (){
@@ -100,26 +107,21 @@ createTaskBlock.addEventListener('submit', (event)=> {
 
     if(isEmpty(input)){
 
-        if(document.querySelector('.error-message-block')){
-            document.querySelector('.create-task-block').lastChild.remove();
-        }
+        checkIfExistSpanErr()
+
         createSpanErr('Название задачи не должно быть пустым');
 
     }
     else if(findTask()){
 
-        if(document.querySelector('.error-message-block')){
-            document.querySelector('.create-task-block').lastChild.remove();
-        }
+        checkIfExistSpanErr()
 
         createSpanErr('Задача с таким названием уже существует');
 
     }
     else{
 
-        if(document.querySelector('.error-message-block')){
-            document.querySelector('.create-task-block').lastChild.remove();
-        }
+        checkIfExistSpanErr()
 
         tasks.push(task);
         input.value = '';
