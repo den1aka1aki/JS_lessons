@@ -73,14 +73,13 @@ createTaskBlock.addEventListener('submit', (event)=> {
         id: uniqId,
         text: input.value
     }
-    function createSpanErr () {
+    function createSpanErr (message) {
 
         const errBlock = document.querySelector('.create-task-block');
         const span = document.createElement('span');
         span.className = 'error-message-block';
         errBlock.append(span);
-        span.textContent = 'buuuu'
-
+        span.textContent = message;
 
 
     }
@@ -100,14 +99,27 @@ createTaskBlock.addEventListener('submit', (event)=> {
     }
 
     if(isEmpty(input)){
-        createSpanErr()
+
+        if(document.querySelector('.error-message-block')){
+            document.querySelector('.create-task-block').lastChild.remove();
+        }
+        createSpanErr('Название задачи не должно быть пустым');
 
     }
     else if(findTask()){
-        createSpanErr()
+
+        if(document.querySelector('.error-message-block')){
+            document.querySelector('.create-task-block').lastChild.remove();
+        }
+
+        createSpanErr('Задача с таким названием уже существует');
 
     }
     else{
+
+        if(document.querySelector('.error-message-block')){
+            document.querySelector('.create-task-block').lastChild.remove();
+        }
 
         tasks.push(task);
         input.value = '';
