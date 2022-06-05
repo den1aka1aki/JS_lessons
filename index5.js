@@ -139,14 +139,14 @@ div2.append(h3, div3);
 div3.append(btnRemove, btnCancel);
 document.body.append(divModal);
 
-const allDeleteBtn = document.querySelectorAll('.tasks-list');
+const allDeleteBtn = document.querySelectorAll('.task-item__delete-button');
 allDeleteBtn.forEach((button)=>{
     button.addEventListener('click', (event)=>{
 
         const {target} = event;
         console.log(target)
         console.log(target.parentNode.parentNode.parentNode)
-       // target.parentNode.parentNode.parentNode.removeChild(target.parentNode.parentNode)
+        target.parentNode.parentNode.parentNode.removeChild(target.parentNode.parentNode)
 
 
         // const taskId = target.getAttribute('data-delete-task-id');
