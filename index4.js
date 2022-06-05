@@ -98,7 +98,7 @@ createTaskBlock.addEventListener('submit', (event)=> {
             createSpanErr('Название задачи не должно быть пустым');
             validationFlag = true;
         }
-        if( tasks.find(task => task.text === input.value )) {
+        if( tasks.find(task => task.text === input.value.trim() )) {
             createSpanErr('Задача с таким названием уже существует');
             validationFlag = true;
         }
