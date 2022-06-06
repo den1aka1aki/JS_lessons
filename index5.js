@@ -143,17 +143,25 @@ const allDeleteBtn = document.querySelectorAll('.task-item__delete-button');
 allDeleteBtn.forEach((button)=>{
     button.addEventListener('click', (event)=>{
 
+        ///////////////////
+        divModal.className = 'modal-overlay';
+
+
+        //////////////
         const {target} = event;
         console.log(target)
         console.log(target.parentNode.parentNode.parentNode)
+
         target.parentNode.parentNode.parentNode.removeChild(target.parentNode.parentNode)
+        const taskId = target.getAttribute('data-delete-task-id');
 
 
-        // const taskId = target.getAttribute('data-delete-task-id');
-        //
-        // const taskToDel = tasks.find(task => task.id === taskId)
-        //
-        // console.log(taskToDel)
+
+        let taskToDel = tasks.map(function (task){
+            return task.id
+        }).indexOf(taskId);
+        tasks.splice(taskToDel, 1);
+
 
 
     })
