@@ -122,79 +122,81 @@ createTaskBlock.addEventListener('submit', (event)=> {
 
 
 
-let divModal = document.createElement('div'),
-    div4 = document.createElement('div'),
-    h3 = document.createElement("h3"),
-    div5 = document.createElement('div'),
-    btnRemove = document.createElement('button'),
-    btnCancel = document.createElement('button');
+// let divModal = document.createElement('div'),
+//     div4 = document.createElement('div'),
+//     h3 = document.createElement("h3"),
+//     div5 = document.createElement('div'),
+//     btnRemove = document.createElement('button'),
+//     btnCancel = document.createElement('button');
+//
+//
+// divModal.className = 'modal-overlay modal-overlay_hidden';
+// div4.className = 'delete-modal';
+// h3.className = 'delete-modal__question';
+// h3.textContent = 'Вы действительно хотите удалить эту задачу?';
+// div5.className = 'delete-modal__buttons';
+// btnCancel.className = 'delete-modal__button delete-modal__cancel-button';
+// btnCancel.textContent = 'Отмена';
+// btnRemove.textContent = 'Удалить';
+// btnRemove.className = 'delete-modal__button delete-modal__confirm-button';
+//
+//
+//
+// divModal.append(div4);
+// div4.append(h3, div5);
+// div5.append(btnRemove, btnCancel);
+// document.body.append(divModal);
+//
+// //////////// функция по удалению строки ДОМа и ячейки массива
+// function delRow (delBtn){
+//     delBtn.parentNode.parentNode.parentNode.removeChild(delBtn.parentNode.parentNode);
+//     const taskId = delBtn.getAttribute('data-delete-task-id');
+//     let taskToDel = tasks.map(function (task){
+//     return task.id
+//      }).indexOf(taskId);
+//     tasks.splice(taskToDel, 1);
+//
+// }
+// /////////// функция по вызову модал окна и проверка на нажатие кнопки
+//
+// function modalWindow (btnAtt){
+//
+//     divModal.className = 'modal-overlay';
+//     const delModalBtn = document.querySelector('.delete-modal');
+//     delModalBtn.addEventListener('click',(event)=>{
+//
+//         const isModalDelBtn = event.target.closest('.delete-modal__button')
+//
+//         if (isModalDelBtn){
+//
+//             console.log(isModalDelBtn)
+//             if(isModalDelBtn.className === 'delete-modal__button delete-modal__confirm-button'){
+//                 divModal.className = 'modal-overlay modal-overlay_hidden';
+//                 delRow(btnAtt);
+//             }
+//            else if(isModalDelBtn.className === 'delete-modal__button delete-modal__cancel-button'){
+//                 divModal.className = 'modal-overlay modal-overlay_hidden';
+//
+//             }
+//
+//         }
+//
+//     });
+//
+// }
+//
+// const allBtnDel = document.querySelector('.tasks-list');
+//     allBtnDel.addEventListener('click', (event)=>{
+//         event.preventDefault();
+//
+//      const isDelBtn = event.target.closest('.task-item__delete-button');
+//         if(isDelBtn){
+//             modalWindow(isDelBtn);
+//         }
+//
+//     });
 
 
-divModal.className = 'modal-overlay modal-overlay_hidden';
-div4.className = 'delete-modal';
-h3.className = 'delete-modal__question';
-h3.textContent = 'Вы действительно хотите удалить эту задачу?';
-div5.className = 'delete-modal__buttons';
-btnCancel.className = 'delete-modal__button delete-modal__cancel-button';
-btnCancel.textContent = 'Отмена';
-btnRemove.textContent = 'Удалить';
-btnRemove.className = 'delete-modal__button delete-modal__confirm-button';
-
-
-
-divModal.append(div4);
-div4.append(h3, div5);
-div5.append(btnRemove, btnCancel);
-document.body.append(divModal);
-
-//////////// функция по удалению строки ДОМа и ячейки массива
-function delRow (delBtn){
-    delBtn.parentNode.parentNode.parentNode.removeChild(delBtn.parentNode.parentNode);
-    const taskId = delBtn.getAttribute('data-delete-task-id');
-    let taskToDel = tasks.map(function (task){
-    return task.id
-     }).indexOf(taskId);
-    tasks.splice(taskToDel, 1);
-
-}
-/////////// функция по вызову модал окна и проверка на нажатие кнопки
-
-function modalWindow (btnAtt){
-
-    divModal.className = 'modal-overlay';
-    const delModalBtn = document.querySelector('.delete-modal');
-    delModalBtn.addEventListener('click',(event)=>{
-
-        const isModalDelBtn = event.target.closest('.delete-modal__button')
-
-        if (isModalDelBtn){
-
-            console.log(isModalDelBtn)
-            if(isModalDelBtn.className === 'delete-modal__button delete-modal__confirm-button'){
-                divModal.className = 'modal-overlay modal-overlay_hidden';
-                delRow(btnAtt);
-            }
-           else if(isModalDelBtn.className === 'delete-modal__button delete-modal__cancel-button'){
-                divModal.className = 'modal-overlay modal-overlay_hidden';
-
-            }
-
-        }
-
-    });
-
-}
-
-const allBtnDel = document.querySelector('.tasks-list');
-    allBtnDel.addEventListener('click', (event)=>{
-        event.preventDefault();
-
-     const isDelBtn = event.target.closest('.task-item__delete-button');
-        if(isDelBtn){
-            modalWindow(isDelBtn);
-        }
-
-    });
 
 
 
