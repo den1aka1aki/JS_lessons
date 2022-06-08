@@ -1,5 +1,4 @@
-
-
+let darkFlag = false;
 
 const tasks = [
     {
@@ -44,7 +43,15 @@ function createTask(parent,task){
     btn.dataset.deleteTaskId = task.id;
     btn.textContent = 'Удалить';
 
+    if(darkFlag){
+        div1.style.color = '#ffffff'
+        btn.style.border = '1px solid #ffffff'
 
+    }
+    else{
+        div1.style.color = 'initial'
+        btn.style.border = 'none'
+    }
 
 
 
@@ -79,7 +86,7 @@ createTaskBlock.addEventListener('submit', (event)=> {
     }
 
 
-    function createSpanErr (message) {
+    function createSpanErr(message) {
 
         const errBlock = document.querySelector('.create-task-block');
         const span = document.createElement('span');
@@ -90,167 +97,273 @@ createTaskBlock.addEventListener('submit', (event)=> {
 
     }
 
-    function checkIfExistSpanErr(){
-        if(document.querySelector('.error-message-block')){
+    function checkIfExistSpanErr() {
+        if (document.querySelector('.error-message-block')) {
             document.querySelector('.create-task-block').lastChild.remove();
         }
     }
 
-    function inputValidation (){
-        let validationFlag;
-        checkIfExistSpanErr();
-        if (input.value.toString().trim() === '')
-        {
-            createSpanErr('Название задачи не должно быть пустым');
-            validationFlag = true;
+        function inputValidation() {
+            let validationFlag;
+            checkIfExistSpanErr();
+            if (input.value.toString().trim() === '') {
+                createSpanErr('Название задачи не должно быть пустым');
+                validationFlag = true;
+            }
+            if (tasks.find(task => task.text === input.value.trim())) {
+                createSpanErr('Задача с таким названием уже существует');
+                validationFlag = true;
+            }
+            return validationFlag;
         }
-        if( tasks.find(task => task.text === input.value.trim() )) {
-            createSpanErr('Задача с таким названием уже существует');
-            validationFlag = true;
+
+        if (!inputValidation()) {
+            tasks.push(task);
+            input.value = '';
+            createTask(taskList, task)
+
         }
-        return validationFlag;
-    }
-    if (!inputValidation()){
-        tasks.push(task);
-        input.value = '';
-        createTask(taskList, task)
+
+
+    });
+
+    let divModal = document.createElement('div'),
+        div4 = document.createElement('div'),
+        h3 = document.createElement("h3"),
+        div5 = document.createElement('div'),
+        btnRemove = document.createElement('button'),
+        btnCancel = document.createElement('button');
+
+
+    divModal.className = 'modal-overlay modal-overlay_hidden';
+    div4.className = 'delete-modal';
+    h3.className = 'delete-modal__question';
+    h3.textContent = 'Вы действительно хотите удалить эту задачу?';
+    div5.className = 'delete-modal__buttons';
+    btnCancel.className = 'delete-modal__button delete-modal__cancel-button';
+    btnCancel.textContent = 'Отмена';
+    btnRemove.textContent = 'Удалить';
+    btnRemove.className = 'delete-modal__button delete-modal__confirm-button';
+
+
+    divModal.append(div4);
+    div4.append(h3, div5);
+    div5.append(btnRemove, btnCancel);
+    document.body.append(divModal);
+
+//////////// функция по удалению строки ДОМа и ячейки массива
+    function delRow(delBtn) {
+        //   delBtn.parentNode.parentNode.parentNode.removeChild(delBtn.parentNode.parentNode);
+             delBtn.parentNode.parentNode.remove();
+        const taskId = delBtn.getAttribute('data-delete-task-id');
+        let taskToDel = tasks.map(function (task) {
+            return task.id
+        }).indexOf(taskId);
+        tasks.splice(taskToDel, 1);
 
     }
 
+/////////// функция по вызову модал окна и проверка на нажатие кнопки
+
+    function modalWindow(btnAtt) {
+
+        divModal.className = 'modal-overlay';
+        const delModalBtn = document.querySelector('.delete-modal');
+        delModalBtn.addEventListener('click', (event) => {
+
+            const isModalDelBtn = event.target.closest('.delete-modal__button')
+
+            if (isModalDelBtn) {
+
+
+                if (isModalDelBtn.className === 'delete-modal__button delete-modal__confirm-button') {
+                    divModal.className = 'modal-overlay modal-overlay_hidden';
+                    delRow(btnAtt);
+                } else if (isModalDelBtn.className === 'delete-modal__button delete-modal__cancel-button') {
+                    divModal.className = 'modal-overlay modal-overlay_hidden';
+
+                }
+
+            }
+
+        });
+
+    }
+
+    const allBtnDel = document.querySelector('.tasks-list');
+    allBtnDel.addEventListener('click', (event) => {
+        event.preventDefault();
+        const isDelBtn = event.target.closest('.task-item__delete-button');
+        if (isDelBtn) {
+            modalWindow(isDelBtn);
+        }
+
+    });
+
+
+//
+
+// // // <<<<<<<<<========================== Работа Артема =================================
+
+// document.body.className = 'default_theme';
+//
+// document.body.addEventListener('keydown',(event)=>{
+//        event.preventDefault();
+//        const {key} = event;
+//
+//       if(key === 'Tab'){
+//
+//           if (document.body.classList.contains('default_theme')){
+//               document.body.classList.remove('default_theme');
+//               document.body.style.background = "#24292E";
+//               document.body.classList.add('dark_theme');
+//
+//
+//               document.querySelectorAll('.task-item').forEach((task) => {
+//                   task.style.color = "#ffffff";
+//               })
+//
+//               document.querySelectorAll('button').forEach((button) => {
+//                   button.style.border = "1px solid #ffffff";
+//               })
+//               //document.querySelector('button').addEventListener()
+//           }
+//           //(document.body.classList.contains('dark_theme'))
+//           else {
+//               document.body.classList.remove('dark_theme');
+//               document.body.style.background = "initial";
+//               document.body.classList.add('default_theme');
+//
+//               document.querySelectorAll('.task-item').forEach((task)=>{
+//                   task.style.color = "initial";
+//               })
+//
+//               document.querySelectorAll('button').forEach((button)=>{
+//                   button.style.border = "none";
+//               })
+//
+//           }
+//        }
+//     });
+//
+//
+// function styleChange(){
+//
+//     if (document.body.classList.contains('default_theme')){
+//         document.body.classList.remove('default_theme');
+//         document.body.style.background = "#24292E";
+//         document.body.classList.add('dark_theme');
+//
+//
+//         Array.from(document.querySelectorAll('.task-item')).map((task) => {
+//             task.style.color = "#ffffff";
+//         })
+//
+//         Array.from(document.querySelectorAll('button')).map((button) => {
+//             button.style.border = "1px solid #ffffff";
+//         })
+//         //document.querySelector('button').addEventListener()
+//     }
+//     //(document.body.classList.contains('dark_theme'))
+//     else {
+//         document.body.classList.remove('dark_theme');
+//         document.body.style.background = "initial";
+//         document.body.classList.add('default_theme');
+//
+//         Array.from(document.querySelectorAll('.task-item')).map((task)=>{
+//             task.style.color = "initial";
+//         })
+//
+//         Array.from(document.querySelectorAll('button')).map((button)=>{
+//             button.style.border = "none";
+//         })
+//
+//     }
+//
+// }
+//
+//<<<<<<<<<<<<<<<<<<<<<<======================== Рабочая
+
+//
+// function blackTheme (){
+//
+//     document.body.style.background = "#24292E";
+//     document.body.className = 'dark_theme';
+//
+//     let taskItemBlack = document.querySelectorAll('.task-item');
+//     taskItemBlack.forEach((task)=>{
+//         task.style.color = "#ffffff";
+//     })
+//
+//     let btnBlack = document.querySelectorAll('button');
+//     btnBlack.forEach((button)=>{
+//         button.style.border = "1px solid #ffffff";
+//     })
+// }
+//
+// function defaultTheme (){
+//
+//     document.body.style.background = "initial";
+//     document.body.className = 'default_theme';
+//     let taskItemBlack = document.querySelectorAll('.task-item');
+//     taskItemBlack.forEach((task)=>{
+//         task.style.color = "initial";
+//     })
+//
+//     let btnBlack = document.querySelectorAll('button');
+//     btnBlack.forEach((button)=>{
+//         button.style.border = "none";
+//     })
+//
+//
+// }
+document.body.style.background = 'initial';
+document.body.addEventListener('keydown',(event)=>{
+    const {key} = event;
+
+    if(key === 'Tab'){
+        event.preventDefault();
+        console.log()
+       if(document.body.style.background === 'initial'){
+           document.body.style.background = '#24292E';
+
+           document.querySelectorAll('.task-item').forEach((task)=>{
+           task.style.color = "#ffffff";
+           })
+
+           document.querySelectorAll('button').forEach((button)=>{
+           button.style.border = "1px solid #ffffff";
+           })
+           darkFlag = true;
+       }
+       else {
+           document.body.style.background = 'initial';
+           document.querySelectorAll('.task-item').forEach((task)=>{
+           task.style.color = "initial";
+           })
+           let btnBlack = document.querySelectorAll('button');
+           btnBlack.forEach((button)=>{
+           button.style.border = "none";
+           })
+           darkFlag = false;
+       }
+    }
 
 });
 
 
-
-// let divModal = document.createElement('div'),
-//     div4 = document.createElement('div'),
-//     h3 = document.createElement("h3"),
-//     div5 = document.createElement('div'),
-//     btnRemove = document.createElement('button'),
-//     btnCancel = document.createElement('button');
+// function styleChange(){
+//     document.body.style.background = 'initial';
+//     if (document.body.style.background === 'initial'){
+//         blackTheme()
+//     }
+//     else if (document.body.style.background === '#24292E'){
+//         defaultTheme();
+//     }
 //
 //
-// divModal.className = 'modal-overlay modal-overlay_hidden';
-// div4.className = 'delete-modal';
-// h3.className = 'delete-modal__question';
-// h3.textContent = 'Вы действительно хотите удалить эту задачу?';
-// div5.className = 'delete-modal__buttons';
-// btnCancel.className = 'delete-modal__button delete-modal__cancel-button';
-// btnCancel.textContent = 'Отмена';
-// btnRemove.textContent = 'Удалить';
-// btnRemove.className = 'delete-modal__button delete-modal__confirm-button';
-//
-//
-//
-// divModal.append(div4);
-// div4.append(h3, div5);
-// div5.append(btnRemove, btnCancel);
-// document.body.append(divModal);
-//
-// //////////// функция по удалению строки ДОМа и ячейки массива
-// function delRow (delBtn){
-//     delBtn.parentNode.parentNode.parentNode.removeChild(delBtn.parentNode.parentNode);
-//     const taskId = delBtn.getAttribute('data-delete-task-id');
-//     let taskToDel = tasks.map(function (task){
-//     return task.id
-//      }).indexOf(taskId);
-//     tasks.splice(taskToDel, 1);
 //
 // }
-// /////////// функция по вызову модал окна и проверка на нажатие кнопки
-//
-// function modalWindow (btnAtt){
-//
-//     divModal.className = 'modal-overlay';
-//     const delModalBtn = document.querySelector('.delete-modal');
-//     delModalBtn.addEventListener('click',(event)=>{
-//
-//         const isModalDelBtn = event.target.closest('.delete-modal__button')
-//
-//         if (isModalDelBtn){
-//
-//             console.log(isModalDelBtn)
-//             if(isModalDelBtn.className === 'delete-modal__button delete-modal__confirm-button'){
-//                 divModal.className = 'modal-overlay modal-overlay_hidden';
-//                 delRow(btnAtt);
-//             }
-//            else if(isModalDelBtn.className === 'delete-modal__button delete-modal__cancel-button'){
-//                 divModal.className = 'modal-overlay modal-overlay_hidden';
-//
-//             }
-//
-//         }
-//
-//     });
-//
-// }
-//
-// const allBtnDel = document.querySelector('.tasks-list');
-//     allBtnDel.addEventListener('click', (event)=>{
-//         event.preventDefault();
-//
-//      const isDelBtn = event.target.closest('.task-item__delete-button');
-//         if(isDelBtn){
-//             modalWindow(isDelBtn);
-//         }
-//
-//     });
-
-
-function blackTheme (){
-
-document.body.style.background = "#24292E";
-document.body.className = 'dark_theme';
-
-let taskItemBlack = document.querySelectorAll('.task-item');
-taskItemBlack.forEach((task)=>{
-    task.style.color = "#ffffff";
-})
-
-let btnBlack = document.querySelectorAll('button');
-btnBlack.forEach((button)=>{
-    button.style.border = "1px solid #ffffff";
-})
-}
-
-function defaultTheme (){
-
-    document.body.style.background = "initial";
-    document.body.className = 'default_theme';
-    let taskItemBlack = document.querySelectorAll('.task-item');
-    taskItemBlack.forEach((task)=>{
-        task.style.color = "initial";
-    })
-
-    let btnBlack = document.querySelectorAll('button');
-    btnBlack.forEach((button)=>{
-        button.style.border = "none";
-    })
-
-
-}
-
-    document.body.addEventListener('keydown',(event)=>{
-       const {key} = event;
-      if(key === 'Tab'){
-           console.log(key);
-           styleChange();
-       }
-    });
-
-
-function styleChange(){
-    document.body.className = 'default_theme';
-    if (document.body.className === 'default_theme'){
-        blackTheme()
-    }
-    else if (document.body.className === 'dark_theme'){
-        defaultTheme();
-    }
-
-
-
-}
 
 
 
