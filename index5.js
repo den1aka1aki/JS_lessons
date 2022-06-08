@@ -45,13 +45,15 @@ function createTask(parent,task){
     btn.textContent = 'Удалить';
 
 
+
+
+
     parent.append(div1);
 
     form.append(input, label);
     div3.append(form, span);
     div2.append(div3, btn);
     div1.append(div2);
-
 
 }
 
@@ -71,8 +73,11 @@ createTaskBlock.addEventListener('submit', (event)=> {
     let input = document.querySelector('.create-task-block__input');
     let task = {
         id: uniqId,
+        completed: false,
         text: input.value
+
     }
+
 
     function createSpanErr (message) {
 
@@ -109,63 +114,88 @@ createTaskBlock.addEventListener('submit', (event)=> {
         tasks.push(task);
         input.value = '';
         createTask(taskList, task)
+
     }
 
 
 });
-// remove
 
 
 
 let divModal = document.createElement('div'),
-    div2 = document.createElement('div'),
+    div4 = document.createElement('div'),
     h3 = document.createElement("h3"),
-    div3 = document.createElement('div'),
+    div5 = document.createElement('div'),
     btnRemove = document.createElement('button'),
     btnCancel = document.createElement('button');
 
+
 divModal.className = 'modal-overlay modal-overlay_hidden';
-div2.className = 'delete-modal';
+div4.className = 'delete-modal';
 h3.className = 'delete-modal__question';
 h3.textContent = 'Вы действительно хотите удалить эту задачу?';
-div3.className = 'delete-modal__buttons';
+div5.className = 'delete-modal__buttons';
 btnCancel.className = 'delete-modal__button delete-modal__cancel-button';
 btnCancel.textContent = 'Отмена';
 btnRemove.textContent = 'Удалить';
 btnRemove.className = 'delete-modal__button delete-modal__confirm-button';
 
-divModal.append(div2);
-div2.append(h3, div3);
-div3.append(btnRemove, btnCancel);
+
+
+divModal.append(div4);
+div4.append(h3, div5);
+div5.append(btnRemove, btnCancel);
 document.body.append(divModal);
 
-const allDeleteBtn = document.querySelectorAll('.task-item__delete-button');
-allDeleteBtn.forEach((button)=>{
-    button.addEventListener('click', (event)=>{
+//////////// функция по удалению строки ДОМа и ячейки массива
+function delRow (delBtn){
+    delBtn.parentNode.parentNode.parentNode.removeChild(delBtn.parentNode.parentNode);
+    const taskId = delBtn.getAttribute('data-delete-task-id');
+    let taskToDel = tasks.map(function (task){
+    return task.id
+     }).indexOf(taskId);
+    tasks.splice(taskToDel, 1);
 
-        ///////////////////
-        divModal.className = 'modal-overlay';
+}
+/////////// функция по вызову модал окна и проверка на нажатие кнопки
 
+function modalWindow (btnAtt){
 
-        //////////////
-        const {target} = event;
-        console.log(target)
-        console.log(target.parentNode.parentNode.parentNode)
+    divModal.className = 'modal-overlay';
+    const delModalBtn = document.querySelector('.delete-modal');
+    delModalBtn.addEventListener('click',(event)=>{
 
-        target.parentNode.parentNode.parentNode.removeChild(target.parentNode.parentNode)
-        const taskId = target.getAttribute('data-delete-task-id');
+        const isModalDelBtn = event.target.closest('.delete-modal__button')
 
+        if (isModalDelBtn){
 
+            console.log(isModalDelBtn)
+            if(isModalDelBtn.className === 'delete-modal__button delete-modal__confirm-button'){
+                divModal.className = 'modal-overlay modal-overlay_hidden';
+                delRow(btnAtt);
+            }
+           else if(isModalDelBtn.className === 'delete-modal__button delete-modal__cancel-button'){
+                divModal.className = 'modal-overlay modal-overlay_hidden';
 
-        let taskToDel = tasks.map(function (task){
-            return task.id
-        }).indexOf(taskId);
-        tasks.splice(taskToDel, 1);
+            }
 
+        }
 
+    });
 
-    })
-})
+}
+
+const allBtnDel = document.querySelector('.tasks-list');
+    allBtnDel.addEventListener('click', (event)=>{
+        event.preventDefault();
+
+     const isDelBtn = event.target.closest('.task-item__delete-button');
+        if(isDelBtn){
+            modalWindow(isDelBtn);
+        }
+
+    });
+
 
 
 
