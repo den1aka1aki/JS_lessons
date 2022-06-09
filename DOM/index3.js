@@ -53,7 +53,6 @@ function createTask(parent,task){
     div2.append(div3, btn);
     div1.append(div2);
 
-
 }
 
 let taskList = document.querySelector(".tasks-list");

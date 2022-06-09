@@ -219,7 +219,6 @@ body {
     transition: 0.2s ease;
     opacity: 1;
 }
-
 .modal-overlay_hidden {
     top: 100%;
     opacity: 0;
