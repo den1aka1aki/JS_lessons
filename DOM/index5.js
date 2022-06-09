@@ -193,8 +193,3 @@ allBtnDel.addEventListener('click', (event) => {
 
 });
 
-
-
-
-
-
