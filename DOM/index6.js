@@ -169,37 +169,36 @@ createTaskBlock.addEventListener('submit', (event)=> {
 
         divModal.className = 'modal-overlay';
         const delModalBtn = document.querySelector('.delete-modal');
-        delModalBtn.addEventListener('click', (event) => {
+        delModalBtn.addEventListener('click', (button) => {
+            event.preventDefault();
+           const isModalDelBtn = button.target.closest('.delete-modal__button')
+            console.log(isModalDelBtn)
 
-            const isModalDelBtn = event.target.closest('.delete-modal__button')
 
             if (isModalDelBtn) {
-
 
                 if (isModalDelBtn.className === 'delete-modal__button delete-modal__confirm-button') {
                     divModal.className = 'modal-overlay modal-overlay_hidden';
                     delRow(btnAtt);
                 } else if (isModalDelBtn.className === 'delete-modal__button delete-modal__cancel-button') {
                     divModal.className = 'modal-overlay modal-overlay_hidden';
-
                 }
-
             }
 
-        });
+        },{once: true});
 
     }
-
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<==============================
     const allBtnDel = document.querySelector('.tasks-list');
-    allBtnDel.addEventListener('click', (event) => {
-        event.preventDefault();
-        const isDelBtn = event.target.closest('.task-item__delete-button');
-        if (isDelBtn) {
-            modalWindow(isDelBtn);
+    allBtnDel.addEventListener('click', (button) => {
+    const isDelBtn = button.target.closest('.task-item__delete-button');
+    if (isDelBtn) {
+         modalWindow(isDelBtn);
         }
-
     });
 
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<==============================
+///////////////////////////////////////////
 
 document.body.style.background = 'initial';
 document.body.addEventListener('keydown',(event)=>{
@@ -208,6 +207,7 @@ document.body.addEventListener('keydown',(event)=>{
     if(key === 'Tab'){
         event.preventDefault();
         console.log()
+
        if(document.body.style.background === 'initial'){
            document.body.style.background = '#24292E';
 
