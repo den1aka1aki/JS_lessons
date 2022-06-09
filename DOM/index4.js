@@ -81,7 +81,6 @@ createTaskBlock.addEventListener('submit', (event)=> {
         errBlock.append(span);
         span.textContent = message;
 
-
     }
 
     function checkIfExistSpanErr(){
