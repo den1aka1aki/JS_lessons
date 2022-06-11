@@ -41,7 +41,7 @@
 
 
 ///<<<<<<<<<<========================= Задание 3 =========================
-
+//
 const PHOTO_URL = 'https://jsonplaceholder.typicode.com/albums';
 function createLoader (){
     const loaderSpan = document.createElement('span');
@@ -50,7 +50,7 @@ function createLoader (){
     loaderSpan.setAttribute('hidden','');
     document.body.append(loaderSpan);
 }
-const ToggleLoader = () =>{
+const toggleLoader = () =>{
 
     const loaderSpan = document.querySelector('.loader')
     let isHeader =  loaderSpan.hasAttribute('hidden');
@@ -76,14 +76,14 @@ const createList = (title) => {
 
 createLoader();
 const renderAlbums = async () =>{
-    ToggleLoader()
+    toggleLoader()
     try{
 
         const allPhotos = await fetch(PHOTO_URL)
         const photoResult = await allPhotos.json();
         console.log('photoResult', photoResult);
         photoResult.forEach(photo => createList(photo.title))
-        ToggleLoader()
+
     }
 
     catch (error){
@@ -91,9 +91,11 @@ const renderAlbums = async () =>{
         const ulSpace = document.querySelector('.data-container');
         ulSpace.textContent = 'Произошла ошибка в получении данных об альбомах...'
     }
+    finally {
+        toggleLoader()
+    }
 
 }
 
 renderAlbums();
-
 
